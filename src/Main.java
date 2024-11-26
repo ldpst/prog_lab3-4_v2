@@ -16,7 +16,7 @@ public class Main {
         BufferedReader br = null;
         Scene scene = null;
         try {
-            br = new BufferedReader(new FileReader(".data/Main.cfg"));
+            br = new BufferedReader(new FileReader("data/Main.cfg"));
             String line;
             ConfigReader reader = new ConfigReader();
             while ((line = br.readLine()) != null) {
