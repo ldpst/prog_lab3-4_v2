@@ -4,6 +4,7 @@ import story.constants.Statement;
 import story.statementable.Statementable;
 import story.community.Community;
 import story.person.shorty.Shorty;
+import story.sys.ShortyInMoreThanOneTeamException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,8 +23,20 @@ public class Debaters extends Community implements Statementable {
         super();
     }
 
-    public void addOpponent(Debaters opponent) {
-        this.opponents.addAll(opponent.getMembers());
+    public void addOpponent(Debaters opponent) throws ShortyInMoreThanOneTeamException {
+        List<Shorty> opponentMembers = opponent.getMembers();
+        for (Shorty opponentMember : opponentMembers) {
+            String found = null;
+            for (Shorty member : this.getMembers()) {
+                if (member.equals(opponentMember)) {
+                    found = member.getName();
+                }
+            }
+            if (found != null) {
+                throw new ShortyInMoreThanOneTeamException(found);
+            }
+            this.opponents.add(opponentMember);
+        }
         System.out.println(this.getCommaSeparatedNames() + " спорят с " + opponent.getCommaSeparatedNames() + ".");
     }
 
